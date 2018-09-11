@@ -1,34 +1,64 @@
 import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import com.oracle.jrockit.jfr.Producer;
+
 import java.util.HashMap;
 public class Threadexample {
     public static void main(String[] args)
     throws InterruptedException {
         final PC pc = new PC();
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    pc.produce();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        ExecutorService threadPool = Executors.newFixedThreadPool(2);
+        threadPool.execute(new Runnable() {
 
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    pc.consume();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t1.start();
-        t2.start();
-        t1.join();
-        t2.join();
+			@Override
+			public void run() {
+				try {
+                  pc.produce();
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+				
+			}});
+        threadPool.execute(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+                  pc.consume();
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+				
+			}});
+
+//        Thread t1 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    pc.produce();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//
+//        Thread t2 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    pc.consume();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        t1.start();
+//        t2.start();
+//        t1.join();
+//        t2.join();
     }
     public static class PC {
         HashMap < String, Integer > list = new HashMap < String, Integer > ();
@@ -51,6 +81,7 @@ public class Threadexample {
                         System.out.println("Producer consumed-" +
                             val);
                     }
+                    Thread.currentThread().yield();
                     notify();
                     i = 0;
                     Thread.sleep(1000);
@@ -71,6 +102,7 @@ public class Threadexample {
                     System.out.println("Consumer consumed-" + val);
                     list.put("consumer", this.value++);
                     System.out.println("Consumer produced-" + this.value);
+                    Thread.currentThread().yield();
                     notify();
                     Thread.sleep(1000);
                 }

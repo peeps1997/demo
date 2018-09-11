@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 public class Texture {
-	public static Texture wood = new Texture("C:\\Users\\ashekhawat\\eclipse-workspace\\DemoGame\\src\\res\\texture\\wood.png", 64);
-	public static Texture brick = new Texture("C:\\Users\\ashekhawat\\eclipse-workspace\\DemoGame\\src\\res\\texture\\brick.png", 64);
+	public static Texture wood = new Texture("C:\\Users\\ashekhawat\\Desktop\\demo\\DemoGame\\src\\res\\texture\\wood.png", 64);
+	public static Texture brick = new Texture("C:\\Users\\ashekhawat\\Desktop\\demo\\DemoGame\\src\\res\\texture\\brick.png", 64);
 //	public static Texture bluestone = new Texture("res/bluestone.png", 64);
 //	public static Texture stone = new Texture("C:\\Users\\ashekhawat\\eclipse-workspace\\DemoGame\\src\\res\\texture\\stone.png", 64);
-	public static Texture stick = new Texture("C:\\Users\\ashekhawat\\eclipse-workspace\\DemoGame\\src\\res\\texture\\stick.png", 64);
+	public static Texture stick = new Texture("C:\\Users\\ashekhawat\\Desktop\\demo\\DemoGame\\src\\res\\texture\\stick.png", 64);
 	public int[] pixels;
 	private String loc;
 	public final int SIZE;

@@ -10,7 +10,7 @@ public class Game extends JFrame implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 	public int mapWidth = 15;
-	public static int wall = 2;
+	public  int wall = 0;
 	public int mapHeight = 15;
 	private Thread thread;
 	private Thread thread2;
@@ -20,21 +20,21 @@ public class Game extends JFrame implements Runnable{
 	public ArrayList<Texture> textures;
 	public Camera camera;
 	public Screen screen;
-	public static int[][] map = 
+	public int[][] map = 
 		{
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{1,0,0,0,0,0,wall,wall,wall,wall,0,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,0,2,2,2,2,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{1,0,0,0,0,0,0,0,0,0,0,0,3,0,1},
-			{1,0,0,0,4,0,0,0,0,0,0,0,0,0,1},
-			{1,0,0,0,0,0,0,0,0,5,0,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 		};
@@ -87,16 +87,25 @@ public class Game extends JFrame implements Runnable{
 		double delta = 0;
 		requestFocus();
 		while(running) {
+			int i=0,j=0;
 			long now = System.nanoTime();
 			delta = delta + ((now-lastTime) / ns);
 			lastTime = now;
 			while (delta >= 1)//Make sure update is only happening 60 times a second
-			{
+			{	this.map[i][j]=wall;
+				System.out.print("\n-----------");
+				for(int k=0;k<14;k++) {
+					for(int l=0;l<14;l++)
+						System.out.print(this.map[k][l]);
+					System.out.println();}
+				System.out.print("-----------\n");
 				//handles all of the logic restricted time
 				screen.update(camera, pixels);
-				camera.update(map);
-//				if(wall<3)?wall++:0;
+				camera.update(this.map);
+				wall=(wall<3)?wall++:0;
 				delta--;
+				i++;
+				j++;
 			}
 			render();//displays to the screen unrestricted time
 		}
