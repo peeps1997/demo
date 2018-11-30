@@ -23,8 +23,6 @@ public class CollectionExample {
 	  }
 	     
    @Override
-   // finalize method is called on object once  
-   // before garbage collecting it 
    protected void finalize() throws Throwable 
    
    { 
