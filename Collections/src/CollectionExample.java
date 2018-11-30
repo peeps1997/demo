@@ -1,60 +1,39 @@
-import java.util.*;
-public class CollectionExample implements Comparator < String > {
 
+public class CollectionExample {
+	String a;
+	double digit;
+    CollectionExample aob;
+	 public CollectionExample(String a){
+	    this.a =a;
+	 }
+	  public static void main(String args[]){
+		  
+	    CollectionExample a=new CollectionExample("a");
+	    CollectionExample b=new CollectionExample("b");
+	    CollectionExample c=new CollectionExample("c");
+	    a.aob=b;
+	    b.aob=a;
+	    c.aob=a.aob;
+	    CollectionExample d=new CollectionExample("d").aob=new CollectionExample("e");
+	    c=b;
+	    c.aob=null;
 
-    public static void main(String args[]) {
-        int i = 0;
+	    
+	    System.gc();
+	  }
+	     
+   @Override
+   // finalize method is called on object once  
+   // before garbage collecting it 
+   protected void finalize() throws Throwable 
+   
+   { 
+	   // Get current size of heap in bytes
+	    
 
-        List < String > strListArray = new ArrayList < String > ();
-        List < String > strListLinked = new ArrayList < String > ();
-        HashMap < Integer, String > strMap = new HashMap < Integer, String > ();
-        if (strListArray.isEmpty())
-            if (strMap.isEmpty())
-                System.out.println("List n map empty");
-        while (i < 10) {
-            strListArray.add("string Array List" + i);
-            strListLinked.add("string Linked List" + i);
-            strMap.put(i, "string Map " + i);
-            i++;
-        }
-
-        if (strListArray.contains("string Array List1")) {
-            System.out.println("strListArray contains " + strListArray.get(1));
-        }
-        if (strListArray.equals(strListLinked)) {
-            System.out.println("strList equivalent to strLinked List");
-        }
-        Set set = strMap.entrySet();
-        Iterator j = set.iterator();
-        Iterator x = strListArray.iterator();
-
-        System.out.println("strMap hashcode: " + strMap.hashCode());
-        System.out.println("Set :" + set);
-        Collections.shuffle(strListLinked);
-        Collections.shuffle(strListArray);
-        Collections.sort(strListLinked, new CollectionExample());
-        Iterator y = strListLinked.iterator();
-        while (j.hasNext()) {
-
-            System.out.println("StrList Map " + j.next());
-            j.remove();
-            System.out.println("StrList Array " + x.next());
-            x.remove();
-            System.out.println("StrList Linked " + y.next());
-            y.remove();
-        }
-        if (strListArray.isEmpty()) {
-            System.out.println("Array List empty");
-        }
-
-        if (strMap.isEmpty()) {
-            System.out.println("Map empty");
-        }
-    }
-
-    @Override
-    public int compare(String arg0, String arg1) {
-
-        return arg0.compareTo(arg1);
-    }
+		    System.out.println("Garbage collector called");
+		    System.out.println("Object garbage collected : " + this.a );
+       
+   } 
 }
+
